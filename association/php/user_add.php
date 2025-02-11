@@ -13,7 +13,7 @@
         $hash = password_hash($mot_de_passe,PASSWORD_DEFAULT);
 
         $stmt = $pdo -> prepare("INSERT INTO benevoles (nom, email, mot_de_passe, role) VALUES (?, ?, ?, ?)");
-        if (!$stmt -> execute([$nom, $email, $mot_de_passe, $role])) {
+        if (!$stmt -> execute([$nom, $email, $hash, $role])) {
             die('Erreur lors de l\'insertion dans la base de données.');
         }
 
