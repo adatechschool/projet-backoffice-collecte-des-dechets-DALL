@@ -28,9 +28,7 @@
     <title>Liste des Bénévoles</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-</head
-
->
+</head>
 <body class="bg-gray-100 text-gray-900">
 
 
@@ -78,7 +76,7 @@
 
     
                                 <td class="py-3 px-4 flex space-x-2">
-                                    <a href="collection_edit.php?id=<?= $benevole['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                                    <a href="volunteer_edit.php?id=<?= $benevole['id'] ?>" class="bg-teal-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                                         ✏️ Modifier
                                     </a>
                                     <a href="collection_delete.php?id=<?= $benevole['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce bénévole ?');">
