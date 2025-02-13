@@ -15,7 +15,7 @@
     $benevole = $stmt_benevole -> fetch();
     
     if(!$benevole){
-        header("Location : volunteer_list.php");
+        header("Location: volunteer_list.php");
         exit;
     }
 
@@ -26,10 +26,10 @@
         $role = $_POST["role"];
         $hash = PASSWORD_HASH($password, PASSWORD_DEFAULT);
 
-        $stmt = $pdo -> prepare("UPDATE benevoles set nom = ?, email = ?, mot_de_passe = ?, role = ? WHERE id = ?");
+        $stmt = $pdo -> prepare("UPDATE benevoles SET nom = ?, email = ?, mot_de_passe = ?, role = ? WHERE id = ?");
         $stmt -> execute([$nom, $email, $hash, $role, $id]);
         
-        header("Location : volunteer_list.php");
+        header("Location: volunteer_list.php");
         exit;
     }
 ?>
