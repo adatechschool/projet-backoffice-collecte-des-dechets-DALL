@@ -35,7 +35,7 @@
 
 <div class="flex h-screen">
     <!-- Barre de navigation -->
-    <div class="bg-black text-white w-64 p-6">L
+    <div class="bg-black text-white w-64 p-6">
         <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
 
             <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>

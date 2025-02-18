@@ -90,8 +90,20 @@
                         <input type="text" name="lieu" value="<?= htmlspecialchars($collecte['lieu']) ?>" required class="w-full p-2 border border-gray-300 rounded-lg">
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Bénévole :</label>
+                        <select name="benevole" required class="w-full p-2 border border-gray-300 rounded-lg">
+                            <option value="" disabled selected>Sélectionnez un·e bénévole</option>
+                            <?php foreach ($benevoles as $benevole): ?>
+                                <option value="<?= $benevole['id'] ?>" <?= $benevole['id'] == $collecte['id_benevole'] ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($benevole['nom']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
                     <div class="overflow-hidden rounded-lg shadow-lg bg-white">
-                        <label class="block text-gray-700 font-medium">Déchets collectés</label>
+                        <label class="text-xl font-bold text-blue-900 mb-4">Déchets collectés :</label>
                         <table class="w-full table-auto border-collapse">
                             <thead class="bg-gray-700 text-white">
                                 <tr>
@@ -113,7 +125,8 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Dechet :</label>
+                        <h2 class="text-xl font-bold text-blue-900 mb-4">Ajouter des déchets</h2>
+                        <label class="block text-sm font-medium text-gray-700">Déchet :</label>
                         <select name="dechet" required class="w-full p-2 border border-gray-300 rounded-lg">
                             <option value="" disabled selected></option>
                             <?php foreach ($trashs as $trash): ?>
@@ -123,20 +136,9 @@
                         <input type="text" name="quantite_kg" placeholder="Quantité en kg" class="w-full p-2 border border-gray-300 rounded-lg mt-3">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Bénévole :</label>
-                        <select name="benevole" required class="w-full p-2 border border-gray-300 rounded-lg">
-                            <option value="" disabled selected>Sélectionnez un·e bénévole</option>
-                            <?php foreach ($benevoles as $benevole): ?>
-                                <option value="<?= $benevole['id'] ?>" <?= $benevole['id'] == $collecte['id_benevole'] ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($benevole['nom']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
                     <div class="flex justify-end space-x-4">
                         <a href="collection_list.php" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Annuler</a>
-                        <button type="submit" class="bg-cyan-200 text-white px-4 py-2 rounded-lg">Modifier</button>
+                        <button type="submit" class="bg-teal-400 text-black px-4 py-2 rounded-lg">Modifier</button>
                     </div>
                 </form>
             </div>
