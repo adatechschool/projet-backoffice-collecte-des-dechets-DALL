@@ -17,6 +17,14 @@
         header("Location: volunteer_list");
         exit;
     }
+
+    $stmt_dechets = $pdo->prepare("
+        SELECT ROUND(SUM(d.quantite_kg), 1) FROM dechets_collectes d 
+        LEFT JOIN collectes c ON d.id_collecte = c.id 
+        LEFT JOIN benevoles b ON c.id_benevole = b.id
+        WHERE c.id_benevole = ?
+    ");
+
     
 ?>
 
@@ -37,8 +45,8 @@
         <div class="bg-black text-white w-64 p-6">
             <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
 
-                <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><iclass="fas fa-tachometer-alt mr-3"></if> Tableau de bord</a></li>
-                <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><iclass="fas fa-plus-circle mr-3"></iclass=> Ajouter une collecte</a></li>
+                <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
+                <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
                 <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                 <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
                 <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -61,6 +69,7 @@
                         <th class="py-3 px-4 text-left">Nom</th>
                         <th class="py-3 px-4 text-left">Email</th>
                         <th class="py-3 px-4 text-left">Rôle</th>
+                        <th class="py-3 px-4 text-left">Total de déchets collectés</th>
                         <th class="py-3 px-4 text-left">Actions</th>
                     </tr>
                 </thead>
@@ -73,10 +82,15 @@
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['nom']) ?></td>
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['email'])?></td>
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['role'])?></td>
-
+                                <td class="py-3 px-4 text-center"><?php 
+                                            $stmt_dechets->execute([$benevole['id']]);
+                                            $total = $stmt_dechets->fetch();
+                                            $total_string = implode($total)
+                                        ?>
+                                    <?= $total_string == null ? "" : htmlspecialchars($total_string)." kg" ?></td>
     
                                 <td class="py-3 px-4 flex space-x-2">
-                                    <a href="volunteer_edit.php?id=<?= $benevole['id'] ?>" class="bg-teal-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                                    <a href="volunteer_edit.php?id=<?= $benevole['id'] ?>" class="bg-teal-400 hover:bg-teal-600 text-black px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                                         ✏️ Modifier
                                     </a>
                                     <a href="volunteer_delete.php?id=<?= $benevole['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce bénévole ?');">
