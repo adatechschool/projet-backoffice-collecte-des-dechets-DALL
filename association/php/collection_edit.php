@@ -1,3 +1,4 @@
+
 <?php
     require 'config.php';
     require 'garbage.php';
@@ -19,9 +20,7 @@
     if (!$collecte) {
         header("Location: collection_list.php");
         exit;
-    }
-
-    
+    }    
     
     // Récupérer la liste des bénévoles
     $stmt_benevoles = $pdo->prepare("SELECT id, nom FROM benevoles ORDER BY nom");
@@ -61,7 +60,7 @@
 
     <div class="flex h-screen">
         <!-- Dashboard -->
-        <div class="bg-cyan-200 text-white w-64 p-6">
+        <div class="bg-black text-white w-64 p-6">
             <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
 
                 <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
@@ -106,7 +105,7 @@
                                     <tr class="hover:bg-gray-100 transition duration-200">
                                         <td class="py-3 px-4"><?= htmlspecialchars($dechet['type_dechet']) ?></td>
                                         <td class="py-3 px-4"><?= htmlspecialchars($dechet['quantite_kg'])."kg" ?></td>
-                                        <td class="py-3 px-4"><a class="bg-red-600 text-white py-3 px-4" href="garbage_delete.php?id=<?=$dechet['id']?>">delete ?</a></td>
+                                        <td class="py-3 px-4"><a class="bg-red-700 text-white py-1 px-2 text-base rounded-lg" href="garbage_delete.php?id=<?=$dechet['id']?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette collecte ?')">Supprimer</a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -121,7 +120,7 @@
                                 <option value="<?= htmlspecialchars($trash)?>"><?= htmlspecialchars($trash)?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input type="text" name="quantite_kg" placeholder="Quantité en kg">
+                        <input type="text" name="quantite_kg" placeholder="Quantité en kg" class="w-full p-2 border border-gray-300 rounded-lg mt-3">
                     </div>
 
                     <div>

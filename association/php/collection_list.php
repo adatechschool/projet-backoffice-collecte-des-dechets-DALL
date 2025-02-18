@@ -16,6 +16,12 @@
         $admin = $query->fetch(PDO::FETCH_ASSOC);
         $adminNom = $admin ? htmlspecialchars($admin['nom']) : 'Aucun administrateur trouvé';
 
+        $stmt_collecte = $pdo->prepare("SELECT ROUND(SUM(d.quantite_kg),1) FROM dechets_collectes d LEFT JOIN collectes c ON d.id_collecte = c.id WHERE d.id_collecte = ?");
+    
+        $stmt_total = $pdo->query("SELECT ROUND(SUM(d.quantite_kg),1) FROM dechets_collectes d");
+        $stmt_total->execute();
+        $total = $stmt_total->fetch();
+
     } catch (PDOException $e) {
         echo "Erreur de base de données : " . $e->getMessage();
         exit;
@@ -68,11 +74,15 @@
         <?php endif; ?>
 
         <!-- Cartes d'informations -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- Nombre total de collectes -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Total des Collectes</h3>
-                <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?></p>
+                <p class="text-3xl font-bold text-blue-800"><?= count($collectes) ?></p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Total de déchets collectés</h3>
+                <p class="text-3xl font-bold text-blue-800"><?= implode($total)."kg" ?></p>
             </div>
             <!-- Dernière collecte -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -95,6 +105,7 @@
                     <th class="py-3 px-4 text-left">Date</th>
                     <th class="py-3 px-4 text-left">Lieu</th>
                     <th class="py-3 px-4 text-left">Bénévole Responsable</th>
+                    <th class="py-3 px-4 text-left">Déchets collectés</th>
                     <th class="py-3 px-4 text-left">Actions</th>
                 </tr>
                 </thead>
@@ -106,11 +117,18 @@
                         <td class="py-3 px-4">
                             <?= $collecte['nom'] ? htmlspecialchars($collecte['nom']) : 'Aucun bénévole' ?>
                         </td>
+                        <td class="py-3 px-4"><?php
+                                    $stmt_collecte->execute([$collecte['id']]);
+                                    $dechets = $stmt_collecte->fetch();
+                                    $dechets_string = implode($dechets);
+                                ?>
+                                <?= $dechets_string == null ? "N/R" : htmlspecialchars($dechets_string)."kg" ?>
+                        </td>
                         <td class="py-3 px-4 flex space-x-2">
-                            <a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                            <a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-teal-400 hover:bg-teal-600 text-black px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                                 ✏️ Modifier
                             </a>
-                            <a href="collection_delete.php?id=<?= $collecte['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette collecte ?');">
+                            <a href="collection_delete.php?id=<?= $collecte['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce déchet ?');">
                                 🗑️ Supprimer
                             </a>
                         </td>
