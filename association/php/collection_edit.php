@@ -9,6 +9,7 @@
     }
 
     $id = $_GET['id'];
+    $_SESSION['id'] = $id;
 
     // Récupérer les informations de la collecte
     $stmt = $pdo->prepare("SELECT * FROM collectes WHERE id = ?");

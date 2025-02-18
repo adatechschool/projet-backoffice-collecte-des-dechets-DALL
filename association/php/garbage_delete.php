@@ -1,8 +1,9 @@
  <?php
     require 'config.php';
 
+
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        $id = (int) $_GET['id'];
+        $id_trash = (int) $_GET['id'];
 
         try {
             $pdo = new PDO("mysql:host=localhost;dbname=gestion_collectes", "root", "", [
@@ -10,12 +11,11 @@
             ]);
 
             $stmt = $pdo->prepare("DELETE FROM dechets_collectes WHERE id = :id");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id_trash, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
-                //require_once "./collection_edit.php?id=$id&&success=1";
-            header("Location: ".$_SERVER['PHP_SELF']);
-                exit();
+            header("Location: collection_edit.php?id=".$_SESSION['id']);
+                exit;
             } else {
                 echo "Erreur lors de la suppression.";
             }
