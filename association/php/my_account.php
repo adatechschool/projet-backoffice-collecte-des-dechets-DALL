@@ -73,7 +73,7 @@
                 <a href="collection_list.php" class="text-sm text-blue-600 hover:underline">Retour à la liste des
                     collectes</a>
                 <button type="button" onclick="updateSettings()"
-                        class="bg-cyan-200 hover:bg-cyan-600 text-white px-6 py-2 rounded-lg shadow-md">
+                        class="bg-teal-400 hover:bg-teal-600 text-black px-6 py-2 rounded-lg shadow-md">
                     Mettre à jour
                 </button>
             </div>

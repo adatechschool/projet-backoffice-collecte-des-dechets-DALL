@@ -87,7 +87,7 @@
 
                 <div class="mt-6">
                     <button type="submit"
-                            class="w-full bg-cyan-200 hover:bg-cyan-600 text-white py-3 rounded-lg shadow-md font-semibold">
+                            class="w-full bg-teal-400 hover:bg-teal-600 text-black py-3 rounded-lg shadow-md font-semibold">
                         Ajouter le bénévole
                     </button>
                 </div>
